@@ -18,7 +18,7 @@ public enum Box {
     NOBOMB;
     public Object image;
     Box getNextNumberBox() {
-        return Box.values()[Box.BOMB.ordinal() + 1];
+        return Box.values()[this.ordinal() + 1];
     }
     int getNumber() {
         return this.ordinal();

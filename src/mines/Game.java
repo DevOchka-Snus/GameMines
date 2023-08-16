@@ -31,7 +31,7 @@ public class Game {
         checkWinner();
     }
 
-    private boolean gameOver() {
+    public boolean gameOver() {
         if (state == GameState.PLAYED) {
             return false;
         }

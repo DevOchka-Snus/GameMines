@@ -37,10 +37,9 @@ public class Bomb {
     }
     private void incNumbersAroundBomb(Coordinates coord) {
         for (Coordinates around : Range.getCoordsAround(coord)) {
-            if (Box.BOMB != bombMap.getBox(coord)) {
+            if (Box.BOMB != bombMap.getBox(around)) {
                 bombMap.setBox(around, bombMap.getBox(around).getNextNumberBox());
             }
-            bombMap.setBox(around, Box.NUM1);
         }
     }
 }

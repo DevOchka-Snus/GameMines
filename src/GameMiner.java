@@ -3,15 +3,12 @@ import java.awt.*;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 
+import mines.*;
 import mines.Box;
-import mines.Coordinates;
-import mines.Game;
-import mines.Range;
 
 public class GameMiner extends JFrame {
     private Game game;
     private JPanel panel;
-    private JLabel label;
     private final int COLUMNS = 9;
     private final int ROWS = 9;
     private final int BOMBS  = 10;
@@ -23,7 +20,6 @@ public class GameMiner extends JFrame {
         game = new Game(COLUMNS, ROWS, BOMBS);
         game.start();
         setImages();
-        initLabel();
         initPanel();
         initFrame();
     }
@@ -52,8 +48,10 @@ public class GameMiner extends JFrame {
                 if(e.getButton() == MouseEvent.BUTTON3) {
                     game.pressRightButton(coord);
                 }
-                label.setText(getMessage());
                 panel.repaint();
+                if (game.getState() != GameState.PLAYED) {
+                    showGameOverDialog();
+                }
             }
         });
         panel.setPreferredSize(new Dimension(
@@ -64,16 +62,14 @@ public class GameMiner extends JFrame {
 
     private String getMessage() {
         switch (game.getState()) {
-            case PLAYED -> {return "THINK TWICE!";}
             case BOMBED -> {return "YOU LOSE!";}
             case WINNER -> {return "YOU WIN!";}
             default -> {return "WELCOME!";}
         }
     }
 
-    private void initLabel() {
-        label = new JLabel();
-        add(label, BorderLayout.SOUTH);
+    private void showGameOverDialog() {
+        JOptionPane.showMessageDialog(this, getMessage(), "GAME OVER", JOptionPane.INFORMATION_MESSAGE);
     }
     private void initFrame() {
         setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
